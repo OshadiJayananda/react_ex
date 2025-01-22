@@ -3,6 +3,8 @@ import Login from './Login';
 import './App.css';
 import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import Post from './Post';
+import SignIn from './SignIn';
+import Book from './Book';
 
 function App() {
   return (
@@ -10,8 +12,11 @@ function App() {
       <div>
         <ToastContainer />
         <Routes>
-          <Route path="/" element={<Post />} />
-          {/* <Route path="/login" element={<Login />} /> */}
+          
+          <Route path="/" element={<Login />} />
+          <Route path="/signIn" element={<SignIn />} />
+          <Route path="/addPost" element={<Post />} />
+          <Route path="/addBook" element={<Book />} />
         </Routes>
       </div>
     </Router>
