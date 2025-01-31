@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import login_pg from "./images/login_pg.jpg";
 import api from "./api";
 
 function Login() {
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     const email = document.getElementById("username").value;
@@ -10,9 +13,19 @@ function Login() {
 
     try {
       const response = await api.post("/login", { email, password });
-      localStorage.setItem("token", response.data.access_token); // Save token
-      alert("Login successful!");
-      window.location.href = "/addBook"; // Redirect after login
+
+      // Save token
+      localStorage.setItem("token", response.data.access_token);
+
+      // Check role and navigate accordingly
+      const userRole = response.data.role;
+      if (userRole === "admin") {
+        navigate("/dashboard");
+      } else if (userRole === "user") {
+        navigate("/addBook");
+      } else {
+        alert("Unknown role: " + userRole);
+      }
     } catch (error) {
       alert("Login failed: " + (error.response?.data?.message || error.message));
     }
