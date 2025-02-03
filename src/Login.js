@@ -10,15 +10,17 @@ function Login() {
     e.preventDefault();
     const email = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-
+  
     try {
       const response = await api.post("/login", { email, password });
-
+  
       // Save token
       localStorage.setItem("token", response.data.access_token);
-
-      // Check role and navigate accordingly
+  
+      // Get role from the response
       const userRole = response.data.role;
+  
+      // Navigate based on the role
       if (userRole === "admin") {
         navigate("/dashboard");
       } else if (userRole === "user") {
@@ -30,6 +32,7 @@ function Login() {
       alert("Login failed: " + (error.response?.data?.message || error.message));
     }
   };
+  
 
   return (
     <div className="flex h-screen">
